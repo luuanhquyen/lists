@@ -19,15 +19,17 @@
     <div class="container" style="margin-bottom: 20px;">
         <div class="row">
             <div class="col-sm" >
+                Paragraph List 
                 <ul class="list-group list-group-flush" id="lefts">
                 </ul>
             </div>
             <div class="col-sm">
-            <button onclick="toRight()">To Right</button> <br /><br />
-            <button onclick="toLeft()">To Left</button> <br /><br />
-            <button onclick="submit()">Submit</button><br />
+            <button style="width:150px" disabled id='right-button' onclick="toRight()"class="btn btn-primary">To Right > </button> <br /><br />
+            <button style="width:150px" disabled id='left-button' onclick="toLeft()" class="btn btn-primary"> < To Left</button> <br /><br />
+            <button style="width:150px" onclick="submit()" class="btn btn-primary">Submit</button><br />
             </div>
             <div class="col-sm">
+                Paragraph Selected
                 <ul class="list-group list-group-flush" id="rights">
                 
                 </ul>
@@ -35,7 +37,8 @@
     </div>
 
     <br /><br /><br />
-    <textarea id="result" name="w3review" rows="4" cols="50"></textarea>
+    Result: <br />
+    <textarea id="result" name="w3review" rows="4" cols="120"></textarea>
 
 
     

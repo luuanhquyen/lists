@@ -2,8 +2,8 @@
 var client = new $.RestClient('/api/');
 client.add('lefts');
 client.add('rights');
-var selected_left_id;
-var selected_right_id;
+var selected_left_id=0;
+var selected_right_id=0;
 var clickCount = 0;
 getLeft();
 getRight();
@@ -52,6 +52,7 @@ function clickLeft(id)
             selected_left_id=id;
             $(".left-li").removeClass('active');
             $('#left_'+id).addClass('active'); 
+            $('#right-button').prop('disabled', false);
         }, 400);
     } else if (clickCount === 2) {
         clearTimeout(singleClickTimer);
@@ -69,6 +70,7 @@ function clickRight(id)
             selected_right_id=id;
             $(".right-li").removeClass('active');
             $('#right_'+id).addClass('active'); 
+            $('#left-button').prop('disabled', false);
         }, 400);
     } else if (clickCount === 2) {
         clearTimeout(singleClickTimer);
@@ -86,22 +88,31 @@ function removeRight(id){
 }
 
 function toRight(){
+    if(selected_left_id==0) alert("Please select left item first");
     addRight(selected_left_id);
+    selected_left_id=0;
+    $('#right-button').prop('disabled', true);
 }
 
 function toLeft(){
+    if(selected_right_id==0) alert("Please select right item first");
     removeRight(selected_right_id);
+    selected_right_id=0;
+    $('#left-button').prop('disabled', true);
 }
 
 function submit(){
     var request = client.rights.read();
     // GET /rest/api/foo/
     request.done(function (data, textStatus, xhrObject){
-        
         var content='';
         $.each(data.data, function(index) {
             content += data.data[index].content;
         });
+        if(data.data.length==0)
+        {
+            alert("Please select at least 1 item");
+        } 
         $('#result').val(content);
     });  
 }

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ParagraphRight extends Model
 {
     use HasFactory;
+    public function ParagraphLeft()
+    {
+        return $this->belongsTo(ParagraphLeft::class); 
+    }
 }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\ParagraphRight;
 use App\Http\Resources\ParagraphRightCollection;
+use App\Http\Resources\ParagraphRightResource;
 use Illuminate\Http\Request;
+use DB;
 
 class ParagraphRightController extends Controller
 {
@@ -16,8 +18,8 @@ class ParagraphRightController extends Controller
      */
     public function index()
     {
-        $lefts = ParagraphLeft::all(); 
-        return new ParagraphLeftCollection($lefts);
+        $lefts = ParagraphRight::all(); 
+        return new ParagraphRightCollection($lefts);
     }
 
     /**
@@ -38,7 +40,14 @@ class ParagraphRightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->all();
+        $left_id=$inputs['id'];  
+        ParagraphRight::where('paragraph_left_id', $left_id)->delete();
+        $paragraph = new ParagraphRight();
+        $paragraph->paragraph_left_id=$left_id;
+        $paragraph->save();
+        $right = ParagraphRight::where('paragraph_left_id', $left_id)->first(); 
+        return new ParagraphRightResource($right);
     }
 
     /**
@@ -81,8 +90,9 @@ class ParagraphRightController extends Controller
      * @param  \App\Models\ParagraphRight  $paragraphRight
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ParagraphRight $paragraphRight)
+    public function destroy($paragraphRight)
     {
-        //
+        ParagraphRight::where('id', $paragraphRight)->delete();
+        return response()->json(['status' => 'deleted']);
     }
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\ParagraphLeft;
+use App\Models\ParagraphRight;
 use App\Http\Resources\ParagraphLeftCollection;
 use Illuminate\Http\Request;
+use DB;
 
 class ParagraphLeftController extends Controller
 {
@@ -16,7 +18,9 @@ class ParagraphLeftController extends Controller
      */
     public function index()
     {
-        $lefts = ParagraphLeft::all(); 
+        DB::statement("update paragraph_lefts set is_selected = false");
+        DB::statement("update paragraph_lefts set is_selected = true where id in (select paragraph_left_id from paragraph_rights)");
+        $lefts = ParagraphLeft::where("is_selected",false)->get(); 
         return new ParagraphLeftCollection($lefts);
     }
 

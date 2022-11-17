@@ -19,7 +19,6 @@ function getLeft()
             if (data.data[index].is_selected==1) add_class='disabled';
             content = '<li id="left_'+data.data[index].id+'"  onclick="clickLeft('+data.data[index].id+')" class="left-li list-group-item '+add_class+'">'+data.data[index].content+'</li>';
             $( "#lefts" ).append(content);
-            
         });
     });  
 } 
@@ -43,6 +42,7 @@ function addRight(id){
       }); 
       
 }
+
 function clickLeft(id)
 {
     clickCount++;
@@ -59,6 +59,7 @@ function clickLeft(id)
         addRight(id);
     }
 }
+
 function clickRight(id)
 {
     clickCount++;
@@ -75,6 +76,7 @@ function clickRight(id)
         removeRight(id);
     }
 }
+
 function removeRight(id){
    
     client.rights.destroy(id).done(function(data) {
@@ -86,9 +88,11 @@ function removeRight(id){
 function toRight(){
     addRight(selected_left_id);
 }
+
 function toLeft(){
     removeRight(selected_right_id);
 }
+
 function submit(){
     var request = client.rights.read();
     // GET /rest/api/foo/
@@ -100,6 +104,5 @@ function submit(){
         });
         $('#result').val(content);
     });  
-
 }
 

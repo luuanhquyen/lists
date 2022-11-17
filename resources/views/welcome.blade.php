@@ -10,10 +10,10 @@
     <script src="/jquery.min.js"></script>
     <script src="/jquery.rest.min.js"></script> 
 
-    <title>Hello, world!</title>
+    <title>Lists selection demo</title>
   </head>
   <body>
-    <h1> Lists selected sample <br /></h1>
+    <h1> Lists selection sample <br /></h1>
 
 
     <div class="container" style="margin-bottom: 20px;">
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-
+    <br /><br /><br />
     <textarea id="result" name="w3review" rows="4" cols="50"></textarea>
 
 

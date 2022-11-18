@@ -15,8 +15,9 @@ function getLeft()
     request.done(function (data, textStatus, xhrObject){
         $( "#lefts" ).empty();
         $.each(data.data, function(index) {
-            add_class='';
+            var add_class='';
             if (data.data[index].is_selected==1) add_class='disabled';
+            if (data.data[index].id == selected_left_id) add_class+=' active';
             content = '<li id="left_'+data.data[index].id+'"  onclick="clickLeft('+data.data[index].id+')" class="left-li list-group-item '+add_class+'">'+data.data[index].content+'</li>';
             $( "#lefts" ).append(content);
         });
@@ -29,19 +30,13 @@ function getRight()
     request.done(function (data, textStatus, xhrObject){
         $( "#rights" ).empty();
         $.each(data.data, function(index) {
-            content = '<li id="right_'+data.data[index].id+'" onclick="clickRight('+data.data[index].id+')"  class="right-li list-group-item">'+data.data[index].content+'</li>';
+            var addClass="";
+            if(data.data[index].id == selected_right_id) addClass='active';
+            content = '<li id="right_'+data.data[index].id+'" onclick="clickRight('+data.data[index].id+')"  class="right-li list-group-item '+addClass+'">'+data.data[index].content+'</li>';
             $( "#rights" ).append(content);
         });
     });  
 } 
-
-function addRight(id){
-    client.rights.create({id:id}).done(function(data) {
-        getLeft();
-        getRight();
-      }); 
-      
-}
 
 function clickLeft(id)
 {
@@ -79,8 +74,25 @@ function clickRight(id)
     }
 }
 
+function addRight(id){
+    if (selected_left_id==id) 
+    {
+        selected_left_id=0;
+        $('#right-button').prop('disabled', true);
+    }
+    client.rights.create({id:id}).done(function(data) {
+        getLeft();
+        getRight();
+      }); 
+      
+}
+
 function removeRight(id){
-   
+    if (selected_right_id==id) 
+    {
+        selected_right_id=0;
+        $('#left-button').prop('disabled', true);
+    }
     client.rights.destroy(id).done(function(data) {
         getLeft();
         getRight();

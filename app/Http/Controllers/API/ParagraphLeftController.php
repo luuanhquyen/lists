@@ -18,9 +18,8 @@ class ParagraphLeftController extends Controller
      */
     public function index()
     {
-        DB::statement("update paragraph_lefts set is_selected = false");
-        DB::statement("update paragraph_lefts set is_selected = true where id in (select paragraph_left_id from paragraph_rights)");
-        $lefts = ParagraphLeft::where("is_selected",false)->get(); 
+        $choosen = ParagraphRight::select('paragraph_left_id')->get()->toArray();
+        $lefts = ParagraphLeft::whereNotIn('id', $choosen)->get();   
         return new ParagraphLeftCollection($lefts);
     }
 

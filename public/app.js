@@ -11,7 +11,6 @@ getRight();
 function getLeft()
 {
     var request = client.lefts.read();
-    // GET /rest/api/foo/
     request.done(function (data, textStatus, xhrObject){
         $( "#lefts" ).empty();
         $.each(data.data, function(index) {
@@ -26,7 +25,6 @@ function getLeft()
 function getRight()
 {
     var request = client.rights.read();
-    // GET /rest/api/foo/
     request.done(function (data, textStatus, xhrObject){
         $( "#rights" ).empty();
         $.each(data.data, function(index) {
@@ -115,7 +113,6 @@ function toLeft(){
 
 function submit(){
     var request = client.rights.read();
-    // GET /rest/api/foo/
     request.done(function (data, textStatus, xhrObject){
         var content='';
         $.each(data.data, function(index) {
